@@ -37,6 +37,19 @@ nav{
 	font-size: 12px;
   color: #fff;
 }
-.container{
+/* .container{
     padding: 30px;
+} */
+
+.form {
+    width: 500px;
+    height: 600px;
+    margin-top: 30px;
+}
+.btn{
+    margin-top: 20px;
+}
+.mid{
+    margin-top: 100px;
+    text-align: center;
 }
