@@ -1,0 +1,18 @@
+nav{
+    height: 7rem;
+/* background-color: lightgreen;
+ #859E05; */
+
+}
+
+.navitem{
+    padding : 0 35px;
+    font-size: 15px;
+    letter-spacing: 3px;
+
+}
+.navbar-brand{
+    font-size: 30px;
+    padding: 0 20px;
+}
+
