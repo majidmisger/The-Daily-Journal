@@ -1,8 +1,11 @@
 <%- include("partials/header") %>
-<div class= "container mid">
+
+ <div class= "container mid">
+  <%  let current_datetime = post.create %>
+  <% let formatted_date = current_datetime.getDate() + "-" + (current_datetime.getMonth() + 1) + "-" + current_datetime.getFullYear() %>
     <h2><%=post.title%></h2>
-    <h5>Created at <span class="text-secondary"><%=post.create%></span></h5>
+    <h5>Created at <span class="text-secondary"><%=formatted_date%></span></h5>
     <p><%=post.content%></p>
-    
-</div>
+ </div>
+ 
 <%- include("partials/footer") %>
