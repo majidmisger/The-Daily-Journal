@@ -1,0 +1,36 @@
+<%- include("partials/header"); %>
+
+    <div class="container">
+        <h1 >How About a Journal</h1>
+        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Non assumenda beatae id reprehenderit veritatis
+            consectetur iure quidem, dolorem nam asperiores praesentium, illum rerum laborum dolorum rem. Deserunt optio
+            placeat temporibus.</p>
+    </div>
+
+
+
+    <div class="container">
+     
+
+       <% if(posts.length>0){ %>
+        <div class="row">
+            <% posts.forEach(function(post){ %>
+            <div class="col col-4">
+                <div class="card" style="width: 18rem;">
+                    <div class="card-body">
+                        <h5 class="card-title"><%=post.title%></h5>
+                        <p class="card-text"><%=post.content.substring(0,100)%>...</p>
+                        <a href="/post/<%=post._id%>" class="btn btn-primary">Read Full Blog</a>
+                    </div>
+                </div>
+            </div>
+            <%  }) %>
+        </div>
+     <%  }else{ %>
+        <h1>No Post Availabe</h1>
+        <a href="/addBlog" class="btn btn-success">Add Blog</a>
+     <%}%>
+        
+    </div>
+
+    <%- include("partials/footer"); %>

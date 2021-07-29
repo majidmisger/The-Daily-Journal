@@ -1,0 +1,81 @@
+/* navBar Css */
+
+nav{
+    height: 7rem;
+    background-color:#FCD8D4;
+}
+
+.navitem{
+    padding : 0 35px;
+    
+    letter-spacing: 3px;
+    
+
+}
+.nav-link{
+    font-size: 20px;
+    color:black;
+}
+.navbar-brand{
+    font-size: 35px;
+    padding: 0 20px;
+    color:black;
+}
+
+
+/* For Footer section */
+
+.footer-padding {
+	padding-bottom: 60px;
+}
+
+.footer {
+ 	position: fixed;
+	text-align: center;
+	bottom: 0;
+	width: 100%;
+	height: 80px;
+	background-color: #FDF6F0;
+
+
+}
+
+
+.footer p {
+	margin-top: 25px;
+	font-size: 16px;
+    color: black;
+}
+
+h1{
+    color:#FFA0A0;
+    margin-top: 40px;
+}
+
+
+
+
+
+
+.form {
+    width: 500px;
+    height: 600px;
+    margin-top: 30px;
+}
+.btn{
+    margin-top: 20px;
+}
+.mid{
+    margin-top: 100px;
+    text-align: center;
+}
+
+
+
+
+/* For Contact Us Page */
+
+
+.gap{
+  padding: 20px;  
+}
