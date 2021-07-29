@@ -1,7 +1,8 @@
 /* navBar Css */
+
 nav{
     height: 7rem;
-    background-color:lightgreen;
+    background-color:#FCD8D4;
 }
 
 .navitem{
@@ -34,7 +35,7 @@ nav{
 	bottom: 0;
 	width: 100%;
 	height: 80px;
-	background-color: lightgreen;
+	background-color: #FDF6F0;
 
 
 }
@@ -46,7 +47,10 @@ nav{
     color: black;
 }
 
-
+h1{
+    color:#FFA0A0;
+    margin-top: 40px;
+}
 
 
 
