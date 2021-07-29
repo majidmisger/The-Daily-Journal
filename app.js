@@ -68,6 +68,20 @@ app.post("/addBlog", function (req, res) {
     })
 
 })
+<<<<<<< HEAD
+=======
+//delete post Route
+
+app.get("/delete/:id", function(req, res){
+    const postId = req.params.id;
+    Post.findByIdAndRemove(postId, function(err, deletedPost){
+        if(!err){
+            console.log("deleted post successfully");
+            res.redirect("/")
+        }
+    })
+})
+>>>>>>> c3c881dd4f6311c2fda12cc1eeaa610e00f61829
 
 //error Route
 app.get("*", function (req, res) {
