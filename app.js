@@ -24,7 +24,11 @@ app.get("/addBlog", function(req, res){
     res.render("addBlog");
 });
 
+//specific post route
+app.get("/post",function(req,res){
 
+    res.render("post");
+});
 
 //error Route
 app.get("*", function(req, res){
