@@ -1,0 +1,22 @@
+<%- include("partials/header") %>
+<div class="container form">
+
+<H1>Edit Blog</H1>
+<div class="row">
+    <form action="/update/<%=post._id%>" method="post">
+ <div class="col col-12">
+     <label class="form-label">Title</label>
+     <input type="text" name="title" id="" class="form-control" value = "<%=post.title%>">
+ </div>
+ <div class="col col-12">
+    <label class="form-label">Post</label>
+    <textarea name="content" id="" class="form-control" cols="30" rows="12"><%=post.content%></textarea>
+ </div>
+ <div class="col col-12">
+     <button type="submit" class="btn  btn-success"> Update Changes</button>
+ </div>
+</form>
+</div>
+</div>
+
+<%- include("partials/footer") %>

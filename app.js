@@ -68,8 +68,6 @@ app.post("/addBlog", function (req, res) {
     })
 
 })
-<<<<<<< HEAD
-=======
 //delete post Route
 
 app.get("/delete/:id", function(req, res){
@@ -81,7 +79,30 @@ app.get("/delete/:id", function(req, res){
         }
     })
 })
->>>>>>> c3c881dd4f6311c2fda12cc1eeaa610e00f61829
+
+
+
+//edit blog
+
+app.get("/edit/:id",function(req,res){
+   const postId = req.params.id;
+    Post.findById(postId, function(err, post){
+        res.render("update", {post:post});
+    })
+
+});
+
+app.post("/update/:id", function(req,res){
+const postId = req.params.id;
+
+Post.findByIdAndUpdate(postId,req.body,{new: true}, function(err,updatedPost){
+    console.log(updatedPost);
+    res.redirect("/post/"+req.params.id);
+})
+
+
+});
+
 
 //error Route
 app.get("*", function (req, res) {
