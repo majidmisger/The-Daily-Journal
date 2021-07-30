@@ -26,6 +26,19 @@ const postSchema = new mongoose.Schema({
 });
 
 const Post = mongoose.model("Post", postSchema);
+const userSchema = new mongoose.Schema({
+    email: {
+        type: String,
+        required: true,
+    },
+    password: {
+        type: String,
+        require: true,
+    },
+
+});
+
+const User = mongoose.model("User", userSchema);
 
 //index Route
 app.get("/", function (req, res) {
@@ -92,6 +105,7 @@ app.get("/edit/:id",function(req,res){
 
 });
 
+//update route
 app.post("/update/:id", function(req,res){
 const postId = req.params.id;
 
@@ -103,6 +117,16 @@ Post.findByIdAndUpdate(postId,req.body,{new: true}, function(err,updatedPost){
 
 });
 
+//login Route
+app.get("/login", function(req, res){
+    res.render("login")
+});
+
+//registr route
+
+app.get("/Register", function(req, res){
+    res.render("register")
+})
 
 //error Route
 app.get("*", function (req, res) {
