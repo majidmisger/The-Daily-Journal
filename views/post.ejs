@@ -5,14 +5,18 @@
   <% let formatted_date = current_datetime.getDate() + "-" + (current_datetime.getMonth() + 1) + "-" + current_datetime.getFullYear() %>
     <h2><%=post.title%></h2>
     <h5>Created at <span class="text-secondary"><%=formatted_date%></span></h5>
-    <p><%=post.content%></p>
-    
+
+      <p><%=post.content%></p>
+
 </div>
+<% console.log(user) %>
 <div class = "container" id = "homebutton">
 <a href="/" class="btn btn-primary">Return to Home</a>
 <br><br>
+<% if(user && post.author.id.equals(user._id)){ %>
+  <a href="/delete/<%=post._id%>" class="btn btn-danger">Delete</a>
+  <a href="/edit/<%=post._id%>" class="btn btn-info">Edit</a>
+<%} %>
 
-<a href="/delete/<%=post._id%>" class="btn btn-danger">Delete</a>
-<a href="/edit/<%=post._id%>" class="btn btn-info">Edit</a>
 </div>
 <%- include("partials/footer") %>
