@@ -14,22 +14,7 @@ app.use(express.static("public"));
 mongoose.connect('mongodb://localhost:27017/journalDB', { useNewUrlParser: true, useUnifiedTopology: true });
 
 
-const postSchema = new mongoose.Schema({
-    title: {
-        type: String,
-        required: true,
-    },
-    content: {
-        type: String,
-        require: true,
-    },
-    create: {
-        type: Date,
-        default: Date.now,
-    }
-});
 
-const Post = mongoose.model("Post", postSchema);
 const userSchema = new mongoose.Schema({
     email: {
         type: String,
@@ -43,6 +28,29 @@ const userSchema = new mongoose.Schema({
 });
 
 const User = mongoose.model("User", userSchema);
+const postSchema = new mongoose.Schema({
+    title: {
+        type: String,
+        required: true,
+    },
+    content: {
+        type: String,
+        require: true,
+    },
+    create: {
+        type: Date,
+        default: Date.now,
+    },
+    author:{
+      id: {
+          type: mongoose.Schema.Types.ObjectId,
+          ref: "User"
+      },
+      email: String  
+    }
+});
+
+const Post = mongoose.model("Post", postSchema);
 
 var store = new MongoDBStore({
     uri: 'mongodb://localhost:27017/journalDB',
@@ -75,13 +83,30 @@ app.use(session({
 
 app.use(function(req, res, next){
     
-    // var name = req.session.user.email.split('@');
+    
     res.locals.user = req.session.user;
-    // res.locals.name = name[0];
+    
     res.locals.isAuthenticated = req.session.isAuthenticated;
     next();
 
 });
+
+const getAuthorize = function(req, res, next){
+    if(req.session.isAuthenticated){
+        Post.findById(req.params.id, function(err, postfound){
+            if(err){
+                res.redirect("/")
+            } else{
+                if(postfound.author.id.equals(req.session.user._id)){
+                   next(); 
+                } else{
+                    res.redirect("/")
+                }
+            }
+        })
+
+    }
+}
 
 
      
@@ -89,6 +114,7 @@ app.use(function(req, res, next){
 
 //index Route
 app.get("/", function (req, res) {
+   
     Post.find({}, function (err, posts) {
         res.render("home", { posts: posts });
     })
@@ -116,21 +142,26 @@ app.get("/post/:id", function (req, res) {
 app.post("/addBlog",Authenticate.getAuth, function (req, res) {
     const title = req.body.title;
     const content = req.body.content;
-    const post = new Post({
+    const post = {
         title: title,
         content: content
-    });
-    post.save(function (err) {
-        if (!err) {
-
-            res.redirect("/");
-        }
+        
+    }
+    Post.create(post, function(err, newPost){
+        newPost.author.id = req.session.user._id;
+        newPost.author.email = req.session.user.email;
+        newPost.save(function(err){
+            if(!err){
+                console.log(newPost);
+                res.redirect("/");
+            }
+        })
     })
+  
 
 })
 //delete post Route
-
-app.get("/delete/:id",Authenticate.getAuth, function(req, res){
+app.get("/delete/:id",Authenticate.getAuth,getAuthorize, function(req, res){
     const postId = req.params.id;
     Post.findByIdAndRemove(postId, function(err, deletedPost){
         if(!err){
@@ -144,7 +175,7 @@ app.get("/delete/:id",Authenticate.getAuth, function(req, res){
 
 //edit blog
 
-app.get("/edit/:id",Authenticate.getAuth,function(req,res){
+app.get("/edit/:id",Authenticate.getAuth,getAuthorize,function(req,res){
    const postId = req.params.id;
     Post.findById(postId, function(err, post){
         res.render("update", {post:post});
