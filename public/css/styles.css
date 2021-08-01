@@ -80,6 +80,8 @@ p{
 /* for profile page */
 .padding{
     padding: 3rem;
+    margin: auto;
+
 }
 
 /* For Contact Us Page */
@@ -87,6 +89,11 @@ p{
 
 .gap{
   padding: 20px;  
+}
+
+.center{
+    margin: auto;
+    text-align: center;
 }
 
 
