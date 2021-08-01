@@ -30,15 +30,20 @@
           <a class="nav-link" href="/contact">Contact us</a>
         </li>
        <% if(isAuthenticated){ %>
-       <% var name = user.email.split('@'); %>
-       <% var uname = name[0]; %>
+       
           <li class="nav-item">
             <a class="nav-link" href="/addBlog">Add-Blog</a>
          </li>
+        <% if(user){ %>
+          <li class="nav-item">
+            <a class="nav-link" href="/profile/<%=user._id%>">Profile</a>
+          </li>
+        <% } %>
+        
         <li class="nav-item">
           <a class="nav-link" href="/logout">Logout</a>
         </li>
-          <div class="badge bg-primary text-wrap text-center text-uppercase" style="width: 6rem;">logged in AS <%=uname%></div>
+
 
       <%}else{%>
         <li class="nav-item">

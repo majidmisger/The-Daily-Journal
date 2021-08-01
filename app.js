@@ -14,7 +14,7 @@ app.use(express.static("public"));
 mongoose.connect('mongodb://localhost:27017/journalDB', { useNewUrlParser: true, useUnifiedTopology: true });
 
 
-
+//user Schema
 const userSchema = new mongoose.Schema({
     email: {
         type: String,
@@ -24,9 +24,22 @@ const userSchema = new mongoose.Schema({
         type: String,
         require: true,
     },
+    name:{
+        type: String,
+        required: true,
+    },
+    mobile:{
+        type: Number,
+        required: true,
+    },
+    gender:{
+        type: String,
+        required: true,
+    }
 
 });
 
+//User schema
 const User = mongoose.model("User", userSchema);
 const postSchema = new mongoose.Schema({
     title: {
@@ -57,6 +70,7 @@ var store = new MongoDBStore({
     collection: 'sessions'
   });
 
+  //session midddleware
 app.use(session({
     secret: 'keyboard cat',
     resave: false,
@@ -82,15 +96,13 @@ app.use(session({
  
 
 app.use(function(req, res, next){
-    
-    
     res.locals.user = req.session.user;
-    
     res.locals.isAuthenticated = req.session.isAuthenticated;
     next();
 
 });
 
+//Authorize
 const getAuthorize = function(req, res, next){
     if(req.session.isAuthenticated){
         Post.findById(req.params.id, function(err, postfound){
@@ -107,11 +119,6 @@ const getAuthorize = function(req, res, next){
 
     }
 }
-
-
-     
- 
-
 //index Route
 app.get("/", function (req, res) {
    
@@ -160,6 +167,7 @@ app.post("/addBlog",Authenticate.getAuth, function (req, res) {
   
 
 })
+
 //delete post Route
 app.get("/delete/:id",Authenticate.getAuth,getAuthorize, function(req, res){
     const postId = req.params.id;
@@ -174,7 +182,6 @@ app.get("/delete/:id",Authenticate.getAuth,getAuthorize, function(req, res){
 
 
 //edit blog
-
 app.get("/edit/:id",Authenticate.getAuth,getAuthorize,function(req,res){
    const postId = req.params.id;
     Post.findById(postId, function(err, post){
@@ -182,6 +189,7 @@ app.get("/edit/:id",Authenticate.getAuth,getAuthorize,function(req,res){
     })
 
 });
+
 
 //update route
 app.post("/update/:id",Authenticate.getAuth, function(req,res){
@@ -191,8 +199,6 @@ Post.findByIdAndUpdate(postId,req.body,{new: true}, function(err,updatedPost){
     console.log(updatedPost);
     res.redirect("/post/"+req.params.id);
 })
-
-
 });
 
 //login Route
@@ -230,9 +236,17 @@ app.post("/login", function(req, res){
 app.post("/register", function(req, res){
     const email = req.body.email;
     const password = req.body.password;
+    const gender = req.body.gender;
+    const name = req.body.name;
+    const mobile = req.body.mobile;
     const user = new User({
         email:email,
         password: password,
+        gender : gender,
+        gender: gender,
+        mobile : mobile,
+        name: name,
+        
     });
     user.save(function(err){
         if(!err){
@@ -242,6 +256,7 @@ app.post("/register", function(req, res){
     })
 });
 
+//logout route
 app.get("/logout", function(req, res){
     req.session.destroy(function(err){
         if(!err){
@@ -249,9 +264,14 @@ app.get("/logout", function(req, res){
         }
     })
 })
+
 //profile Route 
-app.get("/profile", function(req,res){
-res.render("profile");
+app.get("/profile/:id",Authenticate.getAuth, function(req,res){
+    const userId = req.params.id;
+    // console.log(req.params.id);
+   User.findById(userId, function(err, user){
+       res.render("profile", {user: user})
+   })
 });
 
 //error Route
