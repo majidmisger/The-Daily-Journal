@@ -53,6 +53,10 @@ h1{
     
 }
 
+p{
+    padding-top: 20px;
+}
+
 
 
 
@@ -73,7 +77,10 @@ h1{
 }
 
 
-
+/* for profile page */
+.padding{
+    padding: 3rem;
+}
 
 /* For Contact Us Page */
 

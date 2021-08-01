@@ -249,13 +249,16 @@ app.get("/logout", function(req, res){
         }
     })
 })
-
+//profile Route 
+app.get("/profile", function(req,res){
+res.render("profile");
+});
 
 //error Route
 app.get("*", function (req, res) {
     res.render("error")
 })
 
-app.listen(3000, function () {
+app.listen(3000,function(){
     console.log("server Started on Port 3000");
 });
